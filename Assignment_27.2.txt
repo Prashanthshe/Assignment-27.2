@@ -1,0 +1,30 @@
+Assignment 27.2
+
+1. Who is the customer who spent the most on rental movies?                                                                             Return his/her customer id, first name and the amount spent.
+
+Most on rental movies = max rental rate. Amount spent = rental rate
+
+Answer: select customer_id,first_name,rental_rate from customer_rental where rental_rate = (select max(rental_rate) from customer_rental);
+
+   
+2. Give an interesting query of your own that is not already in the assignment. The query should involve at least two joins, HAVING clause and aggregation operation. Give the answer.
+
+Answer: select actor.first_name, actor.last_name,category.name AS name, film.description AS description,         film.rental_rate, flim.length, count(length)
+        from actor
+        join category on actor.actor_id = category.category_id
+        join film on film.film_id = category.category_id
+        group by film.length
+        having length > 85         
+        order by length;  
+
+
+Give the English explanation:
+
+The above query selects columns first name, last name, category name, film description, film rental rate and film length        
+From table 1 (Actor)
+To combine the output result from three tables, we use two joins as below.
+Ie  join <table 1 (Actor).column name(actor_id) and table 2 (Category).column name(category_id)>
+     Join <table 3 (Film).column name(film_id) and table 2 (Category) .column name(category_id)>
+Used aggregate operator (count) (under each category name only 1 record is displayed, so count is1)
+Used Having clause (Having length > 85)
+ 
